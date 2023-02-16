@@ -1,0 +1,21 @@
+# This is the network config written by 'ax0n'
+network:
+  version: 2
+
+  bridges:
+    br0:
+      dhcp4: no
+      dhcp6: no
+      interfaces: [bond0]
+
+      addresses: [10.10.27.71/24]
+
+      routes:
+        - to: 0.0.0.0/0
+          via: 10.10.27.1
+        - to: 10.10.27.0/24
+          from: 10.10.27.72
+
+      nameservers:
+        addresses: [10.10.27.1, 1.1.1.1, 1.0.0.1]
+        search: [local, lab]

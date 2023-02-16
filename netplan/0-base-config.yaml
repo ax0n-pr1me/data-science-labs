@@ -1,0 +1,22 @@
+# This is the network config written by 'ax0n'
+network:
+  version: 2
+
+  ethernets:
+    eno2: {}
+
+    enp129s0f0:
+      dhcp4: no
+      dhcp6: no
+
+    enp129s0f1:
+      dhcp4: no
+      dhcp6: no
+
+    enp129s0f2:
+      dhcp4: no
+      dhcp6: no
+
+    enp129s0f3:
+      dhcp4: no
+      dhcp6: no

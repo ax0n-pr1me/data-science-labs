@@ -1,0 +1,18 @@
+# This is the network config written by 'ax0n'
+network:
+  version: 2
+
+  ethernets:
+    # management network 172.21.19.0/24
+    eno2:
+      dhcp4: no
+      dhcp6: no
+      addresses: [172.21.19.105/24]
+
+      routes:
+        - to: 172.21.19.0/24
+          via: 172.21.19.1
+
+      nameservers:
+        addresses: [172.21.19.1, 1.1.1.1, 1.0.0.1]
+        search: [local, lab]
