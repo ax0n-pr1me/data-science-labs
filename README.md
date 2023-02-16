@@ -23,7 +23,7 @@ wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20R
 ## make environment
 
 ```sh
-conda create --prefix ./env pandas numpy matplotlib scikit-learn
+conda create --prefix ./env python=3.10 numpy matplotlib scikit-learn imageio jupyterlab rasterio 
 
 ssh -L 8888:localhost:8888 sysadmin@172.21.19.105
 jupyter lab --no-browser
