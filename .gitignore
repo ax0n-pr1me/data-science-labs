@@ -1,7 +1,6 @@
 data/
 .DS_Store
 env/
-geo-delta-env/
 output/
 
 *.bundle.*
