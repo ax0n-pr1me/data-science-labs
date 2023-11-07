@@ -36,6 +36,16 @@ Local Time CDT (Daylight Savings Time)
 
 ### Data Notes
 
+<https://github.com/blaylockbk/goes2go#download-data>
+
+<https://goes2go.readthedocs.io/en/latest/user_guide/notebooks/DEMO_download_goes_timerange.html>
+
+<https://goes2go.readthedocs.io/en/latest/reference_guide/index.html>
+
+<https://corteva.github.io/rioxarray/stable/examples/clip_geom.html>
+
+<https://unidata.github.io/python-gallery/examples/mapping_GOES16_TrueColor.html#sphx-glr-download-examples-mapping-goes16-truecolor-py>
+
 <https://www.goes-r.gov/downloads/resources/documents/Beginners_Guide_to_GOES-R_Series_Data.pdf>
 
 <https://docs.opendata.aws/noaa-goes16/cics-readme.html#accessing-goes-data-on-aws>
@@ -89,26 +99,3 @@ OR_ABI-L2-FDCC-M6_G16_s20220762356174_e20220762358547_c20220762359127.nc
 ### Clipping all the scenes
 
 <https://corteva.github.io/rioxarray/stable/examples/clip_geom.html>
-
-{
-  "area_units": "m2",
-  "distance_units": "meters",
-  "ellipsoid": "EPSG:7030",
-  "inputs": {
-    "DATA_TYPE": 5,
-    "EXTRA": "",
-    "INPUT": [
-      "NETCDF:\"/Users/ax0n/Documents/1. Ax0nic/3. Project/ONCOR/137071_EASTLAND_FIRE/GIS/lyr/rst/GOES/2022.03.17-2331z/OR_ABI-L1b-RadC-M6C02_G16_s20220762331174_e20220762333547_c20220762333572.nc\":Rad",
-      "NETCDF:\"/Users/ax0n/Documents/1. Ax0nic/3. Project/ONCOR/137071_EASTLAND_FIRE/GIS/lyr/rst/GOES/2022.03.17-2331z/OR_ABI-L1b-RadC-M6C14_G16_s20220762331174_e20220762333547_c20220762334007.nc\":Rad",
-      "NETCDF:\"/Users/ax0n/Documents/1. Ax0nic/3. Project/ONCOR/137071_EASTLAND_FIRE/GIS/lyr/rst/GOES/2022.03.17-2331z/OR_ABI-L1b-RadC-M6C07_G16_s20220762331174_e20220762333558_c20220762334003.nc\":Rad"
-    ],
-    "NODATA_INPUT": null,
-    "NODATA_OUTPUT": null,
-    "OPTIONS": "",
-    "OUTPUT": "TEMPORARY_OUTPUT",
-    "PCT": false,
-    "SEPARATE": true
-  }
-}
-
-processing.run("gdal:merge", {'INPUT':['NETCDF:"/Users/ax0n/Documents/1. Ax0nic/3. Project/ONCOR/137071_EASTLAND_FIRE/GIS/lyr/rst/GOES/2022.03.17-2331z/OR_ABI-L1b-RadC-M6C02_G16_s20220762331174_e20220762333547_c20220762333572.nc":Rad','NETCDF:"/Users/ax0n/Documents/1. Ax0nic/3. Project/ONCOR/137071_EASTLAND_FIRE/GIS/lyr/rst/GOES/2022.03.17-2331z/OR_ABI-L1b-RadC-M6C14_G16_s20220762331174_e20220762333547_c20220762334007.nc":Rad','NETCDF:"/Users/ax0n/Documents/1. Ax0nic/3. Project/ONCOR/137071_EASTLAND_FIRE/GIS/lyr/rst/GOES/2022.03.17-2331z/OR_ABI-L1b-RadC-M6C07_G16_s20220762331174_e20220762333558_c20220762334003.nc":Rad'],'PCT':False,'SEPARATE':True,'NODATA_INPUT':None,'NODATA_OUTPUT':None,'OPTIONS':'','EXTRA':'','DATA_TYPE':5,'OUTPUT':'TEMPORARY_OUTPUT'})
