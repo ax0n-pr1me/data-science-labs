@@ -103,16 +103,17 @@ OR_ABI-L2-FDCC-M6_G16_s20220762356174_e20220762358547_c20220762359127.nc
 ## GDAL for VRT
 
 We need a bash script to batch generate VRTs for GOES NetCDF data. here is an example of a single command
+we need to make a bash script that accepts an input directory, an output directory, an input order of bands and a band for pan sharpening, and provide an option to save vrts and geotiffs
+for example `goes-sharpen.sh -i ../netcdf -o ./output/ -vrt '7, 14, 15,' -pan 2 -save_vrt True -save_geotiff true`
+this would create a vrt with band 7, 14, and 15 in that order, then pan sharpen it with band 2
+the challenge will be finding the right files and matching them for the vrt.
+files are named like "OR_ABI-L1b-RadC-M6C02_G16_s20220762101174_e20220762103547_c20220762103571.nc"
+the band designation is the last two digits in the section M6C02 (for band 2)
+then, each vrt can only contain bands with the same start time, designated with the s (s20220762101174 for this example)
+the output should save s20220762101174.vrt and s20220762101174.tiff
+the input directory contains files like this...
 
 ```sh
-gdalbuildvrt -overwrite -resolution highest -separate -r cubic ./s20220762101174.vrt 
-NETCDF:./noaa-goes16_b2-7-14/ABI-L1b-RadC/2022/076/21/OR_ABI-L1b-RadC-M6C02_G16_s20220762101174_e20220762103547_c20220762103571.nc:Rad 
-NETCDF:./noaa-goes16_b2-7-14/ABI-L1b-RadC/2022/076/21/OR_ABI-L1b-RadC-M6C07_G16_s20220762101174_e20220762103558_c20220762103593.nc:Rad 
-NETCDF:./noaa-goes16_b2-7-14/ABI-L1b-RadC/2022/076/21/OR_ABI-L1b-RadC-M6C14_G16_s20220762101174_e20220762103547_c20220762104020.nc:Rad
-```
-
-here is an example of a folder directory containing three bands (2, 7, and 14) for mulitple 5 minute intervals.
-
 OR_ABI-L1b-RadC-M6C02_G16_s20220762101174_e20220762103547_c20220762103571.nc
 OR_ABI-L1b-RadC-M6C02_G16_s20220762106174_e20220762108547_c20220762108571.nc
 OR_ABI-L1b-RadC-M6C02_G16_s20220762111174_e20220762113547_c20220762113572.nc
@@ -149,81 +150,21 @@ OR_ABI-L1b-RadC-M6C14_G16_s20220762141174_e20220762143547_c20220762144025.nc
 OR_ABI-L1b-RadC-M6C14_G16_s20220762146174_e20220762148547_c20220762149020.nc
 OR_ABI-L1b-RadC-M6C14_G16_s20220762151174_e20220762153547_c20220762154019.nc
 OR_ABI-L1b-RadC-M6C14_G16_s20220762156174_e20220762158547_c20220762159003.nc
-
-we can match bands by the start time, demoted by the small s in the filename, "s20220762101174" and need to sort the bands in order of band number,  for example - this is band 2 "OR_ABI-L1b-RadC-M6C02" and this is band 7, "OR_ABI-L1b-RadC-M6C07"
-
-our utility needs to create VRTs named by start time e.g. "s20220762101174.vrt" in an output directory specified
-
-it needs to create 12 VRTs for this directory, for example.
-
-please provide a bash script to accomplish this task
-
-`build-vrt.sh`
-
-```sh
-#!/bin/bash
-
-# Directory containing NetCDF files
-input_dir="./noaa-goes16_b2-7-14/ABI-L1b-RadC/2022/076/21"
-# Output directory for VRT files
-output_dir="./output"
-
-# Create output directory if it doesn't exist
-mkdir -p "$output_dir"
-
-# Function to extract start time from filename
-extract_start_time() {
-    echo "$1" | grep -oP 's\d+'
-}
-
-# Function to generate VRT
-generate_vrt() {
-    local start_time=$1
-    local output_file="$output_dir/$start_time.vrt"
-    local files=("${@:2}")
-
-    # Construct gdalbuildvrt command
-    local cmd="gdalbuildvrt -overwrite -resolution highest -separate -r cubic $output_file"
-    for file in "${files[@]}"; do
-        cmd+=" NETCDF:$input_dir/$file:Rad"
-    done
-
-    # Execute command
-    echo "Generating VRT: $output_file"
-    eval "$cmd"
-}
-
-# Main loop
-declare -A file_groups
-for file in "$input_dir"/*; do
-    filename=$(basename "$file")
-    start_time=$(extract_start_time "$filename")
-    file_groups[$start_time]+="$filename "
-done
-
-for start_time in "${!file_groups[@]}"; do
-    files=($start_time ${file_groups[$start_time]})
-    generate_vrt "${files[@]}"
-done
-
-echo "Batch VRT generation complete."
 ```
 
-## safe ish flatten directory
+and here is an example of the VRT command usign gdalbuildvrt
 
 ```sh
- # view files recursively in current directory
- find . -type f
+gdalbuildvrt -overwrite -resolution highest -separate -r cubic ./s20220762101174.vrt 
+NETCDF:.OR_ABI-L1b-RadC-M6C02_G16_s20220762101174_e20220762103547_c20220762103571.nc:Rad 
+NETCDF:.OR_ABI-L1b-RadC-M6C07_G16_s20220762101174_e20220762103558_c20220762103593.nc:Rad 
+NETCDF:.OR_ABI-L1b-RadC-M6C14_G16_s20220762101174_e20220762103547_c20220762104020.nc:Rad
+```
 
-# get count of files
- find . -type f | wc -l
+## Man Pages To Do
 
-# execute move to current directory
- find . -type f -exec mv {} . \;
- 
- # look and clean folders (that are empty now)
- l
- 
- # check file count matches
- l | wc -l
- ```
+This documentation is written in the standard format used for Unix/Linux manual pages. To make this available via the man command, you would typically place this text in a file (e.g., pansharpen-goes.1) in a directory that is part of the MANPATH, such as /usr/share/man/man1/. Additionally, the file needs to be formatted with groff - the GNU troff text-formatting system.
+
+Remember to replace placeholders like [Your Name/Your Organization], [Date of Release], and [Version Number] with the actual details. The SEE ALSO section references related commands (gdalbuildvrt and gdal_translate), assuming they are relevant to users of this script.
+
+After creating the manual page, use gzip to compress it and then place it in the appropriate man directory (e.g., /usr/share/man/man1/). This will make it accessible via the man pansharpen-goes command.-++-

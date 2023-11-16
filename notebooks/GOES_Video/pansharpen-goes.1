@@ -1,0 +1,65 @@
+.TH PANSHARPEN-GOES 1 "Date of Release" "Version Number" "GOES Data Processing"
+.SH NAME
+pansharpen-goes \- Script for generating VRTs and optionally GeoTIFFs from GOES NetCDF data with pan sharpening.
+
+.SH SYNOPSIS
+.B pansharpen-goes
+.RI [ -i " input_directory" ] [ -o " output_directory" ] [ -v " vrt_bands" ] [ -p " pan_band" ] [ -s ] [ -t ]
+
+.SH DESCRIPTION
+.B pansharpen-goes
+is a script designed to automate the process of generating Virtual Raster Tile (VRT) files and optionally GeoTIFF files from GOES NetCDF data. It supports pan sharpening using a specified band and can handle multiple bands. The script groups files based on their start time and specified bands, generating a VRT for each unique start time.
+
+.SH OPTIONS
+.TP
+.BI -i " directory"
+Specify the input directory where NetCDF files are located.
+
+.TP
+.BI -o " directory"
+Specify the output directory where the VRT and GeoTIFF files will be saved.
+
+.TP
+.BI -v " bands"
+Specify the order of bands to be included in the VRT. Bands should be listed as comma-separated values without spaces (e.g., 7,14,15).
+
+.TP
+.BI -p " band"
+Specify the band number used for pan sharpening.
+
+.TP
+.B -s
+Enable saving of VRT files.
+
+.TP
+.B -t
+Enable saving of GeoTIFF files.
+
+.SH EXAMPLES
+To generate VRTs for bands 7, 14, and 15, pan sharpened with band 2, and save both VRTs and GeoTIFFs:
+.RS
+.B pansharpen-goes -i /path/to/netcdf -o /path/to/output -v 7,14,15 -p 2 -s -t
+.RE
+
+.SH FILES
+.I /path/to/netcdf/*
+NetCDF files from GOES data.
+
+.I /path/to/output/*.vrt
+Generated VRT files.
+
+.I /path/to/output/*.tif
+Generated GeoTIFF files, if enabled.
+
+.SH "SEE ALSO"
+.BR gdalbuildvrt(1),
+.BR gdal_translate(1)
+
+.SH AUTHOR
+Written by [Your Name/Your Organization].
+
+.SH "REPORTING BUGS"
+Please report any issues or bugs to [Your Contact Information or Bug Tracker].
+
+.SH COPYRIGHT
+Copyright [Year] [Your Name/Your Organization]. License information here (if applicable).
