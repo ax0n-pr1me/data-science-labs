@@ -10,11 +10,11 @@
 # prefixed with 'clp_'.
 #
 # Usage:
-# ./clip_geotiffs.sh -g <path_to_geojson> -fp <path_to_geotiff_dir> -o <output_dir>
+# ./clip_geotiffs.sh -g <path_to_geojson> -f <path_to_geotiff_dir> -o <output_dir>
 #
 # Arguments:
 # -g  Path to the GeoJSON file used for clipping.
-# -fp Path to the directory containing GeoTIFF files to be clipped.
+# -f Path to the directory containing GeoTIFF files to be clipped.
 # -o  Output directory where clipped GeoTIFF files will be saved.
 #
 # Requirements:
@@ -22,7 +22,7 @@
 #   installed and accessible in your system's PATH.
 #
 # Example:
-# ./clip_geotiffs.sh -g /path/to/boundary.geojson -fp /path/to/geotiffs -o /path/to/output
+# ./clip_geotiffs.sh -g /path/to/boundary.geojson -f /path/to/geotiffs -o /path/to/output
 #
 # Author: Ax0n
 # ---------------------------------------------------------
